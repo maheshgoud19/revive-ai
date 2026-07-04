@@ -585,8 +585,12 @@ app.get('/api/device/:id/logs', async (req, res) => {
 });
 
 // Initial startup checks
-checkAdb().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 ReviveAI ADB Bridge Server running on http://localhost:${PORT}`);
+if (require.main === module) {
+  checkAdb().then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 ReviveAI ADB Bridge Server running on http://localhost:${PORT}`);
+    });
   });
-});
+}
+
+module.exports = app;
